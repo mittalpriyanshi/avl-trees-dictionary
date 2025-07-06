@@ -1,0 +1,75 @@
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #db8989;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgb(133, 222, 166);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 70%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#treeCanvas {
+  max-width: 1000px;
+  height: 500px;
+  display: block;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  background-color: #a8d5ba;
+ 
+  
+}
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#results {
+  margin-top: 20px;
+}
+
+.entry {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.entry strong {
+  color: #007bff;
+}
