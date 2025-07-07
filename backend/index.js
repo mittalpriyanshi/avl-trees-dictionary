@@ -281,8 +281,9 @@ const server = http.createServer((req, res) => {
     await addMeaning(word);
   }
 
-  console.log("✅ All words inserted. Starting server...");
-  server.listen(3001, () => {
-    console.log("🚀 Backend running at https://avl-dictionary-backend.onrender.com");
-  });
+  const PORT = process.env.PORT || 3001;
+
+server.listen(PORT, () => {
+  console.log(`🚀 Backend running on port ${PORT}`);
+});
 })();
