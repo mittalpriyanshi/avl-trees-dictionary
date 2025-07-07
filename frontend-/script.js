@@ -1,4 +1,4 @@
-const BACKEND = "https://avl-dictionary-backend.onrender.com";
+const BACKEND = "https://avl-trees-dictionary.onrender.com";
 
 
 async function searchWords() {
