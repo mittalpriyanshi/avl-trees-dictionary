@@ -283,6 +283,6 @@ const server = http.createServer((req, res) => {
 
   console.log("✅ All words inserted. Starting server...");
   server.listen(3001, () => {
-    console.log("🚀 Backend running at http://localhost:3001");
+    console.log("🚀 Backend running at https://avl-dictionary-backend.onrender.com");
   });
 })();

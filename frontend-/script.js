@@ -1,3 +1,6 @@
+const BACKEND = "https://avl-dictionary-backend.onrender.com";
+
+
 async function searchWords() {
   const prefix = document.getElementById("prefix").value.trim();
   if (prefix.length === 0) {
@@ -6,7 +9,7 @@ async function searchWords() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/search?prefix=${prefix}`);
+    const res = await fetch(`${BACKEND}/api/search?prefix=${prefix}`);
     const data = await res.json();
 
     const resultsDiv = document.getElementById("results");
@@ -40,7 +43,7 @@ async function insertWord() {
   console.log("🚀 Trying to insert:", word, meaning); // 👈 LOG THIS
 
   try {
-    const res = await fetch("http://localhost:3001/api/insert", {
+    const res = await fetch("${BACKEND}/api/insert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ word, meaning }),
@@ -70,7 +73,7 @@ async function deleteWord() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/delete?key=${word}`);
+    const res = await fetch(`${BACKEND}/api/delete?key=${word}`);
     const data = await res.json();
     alert(`🗑️ Deleted: ${word}`);
     drawAVL();
@@ -82,7 +85,7 @@ async function deleteWord() {
 
 
 async function drawAVL() {
-  const res = await fetch("http://localhost:3001/api/tree");
+  const res = await fetch("${BACKEND}/api/tree");
   const tree = await res.json();
 
   const canvas = document.getElementById("treeCanvas");
