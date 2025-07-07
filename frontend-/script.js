@@ -43,7 +43,7 @@ async function insertWord() {
   console.log("🚀 Trying to insert:", word, meaning); // 👈 LOG THIS
 
   try {
-    const res = await fetch("${BACKEND}/api/insert", {
+    const res = await fetch(`${BACKEND}/api/insert`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ word, meaning }),
@@ -85,7 +85,7 @@ async function deleteWord() {
 
 
 async function drawAVL() {
-  const res = await fetch("${BACKEND}/api/tree");
+  const res = await fetch(`${BACKEND}/api/tree`);
   const tree = await res.json();
 
   const canvas = document.getElementById("treeCanvas");
