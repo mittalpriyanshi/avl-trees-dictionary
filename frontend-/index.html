@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AVL Dictionary</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="container">
     <h1>AVL Dictionary Autocomplete</h1>
     <input type="text" id="prefix" oninput="searchWords()" placeholder="Type to search..." />
     <button onclick="search()" id="search">Search</button>
+    <h2>Add Word to Dictionary</h2>
+    <div class="input-group">
+      <input type="text" id="insertWord" placeholder="Word" />
+      <input type="text" id="insertMeaning" placeholder="Meaning (optional)" />
+      <button onclick="insertWord()">Insert</button> 
+    </div>
+   
+    
+    <h2>Delete Word from Dictionary</h2>
+    <input type="text" id="deleteWord" placeholder="Word to delete" />
+    <button onclick="deleteWord()">Delete</button>
+    <div id="results"></div>
     <div class="button-wrapper">
       <button onclick="drawAVL()">📈 Visualize Tree</button>
     </div>
     <canvas id="treeCanvas" width="600" height="600""></canvas>
-    <div id="results"></div>
+    
   </div>
 
-  <script src="script.js"></script>
+  <script src=" script.js"></script>
 </body>
+
 </html>

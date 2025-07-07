@@ -100,6 +100,55 @@ class AVLTree {
     this.inorder(node.right, result);
     return result;
   }
+
+  delete(node, key) {
+    if (!node) return null;
+  
+    if (key < node.key) {
+      node.left = this.delete(node.left, key);
+    } else if (key > node.key) {
+      node.right = this.delete(node.right, key);
+    } else {
+      // Node to delete found
+      if (!node.left || !node.right) {
+        node = node.left || node.right;
+      } else {
+        let temp = node.right;
+        while (temp.left) temp = temp.left;
+        node.key = temp.key;
+        node.value = temp.value;
+        node.right = this.delete(node.right, temp.key);
+      }
+    }
+  
+    if (!node) return null;
+  
+    // Update height
+    node.height = 1 + Math.max(this.height(node.left), this.height(node.right));
+  
+    // Balance
+    const balance = this.balance(node);
+  
+    if (balance > 1 && this.balance(node.left) >= 0) return this.rotateRight(node);
+    if (balance > 1 && this.balance(node.left) < 0) {
+      node.left = this.rotateLeft(node.left);
+      return this.rotateRight(node);
+    }
+  
+    if (balance < -1 && this.balance(node.right) <= 0) return this.rotateLeft(node);
+    if (balance < -1 && this.balance(node.right) > 0) {
+      node.right = this.rotateRight(node.right);
+      return this.rotateLeft(node);
+    }
+  
+    return node;
+  }
+  
+  deleteKey(key) {
+    this.root = this.delete(this.root, key);
+  }
+  
+
 }
 
 const avl = new AVLTree();
@@ -107,9 +156,9 @@ const avl = new AVLTree();
 // ---------------- Word Fetching & Tree Population ------------------
 
 const wordsToAdd = [
-  "apple", "banana", "cat", "dog", "elephant",
+  "apple", "banana", "elephant",
   "keyboard", "monitor", "mouse", "window",
-  "computer", "application", "dictionary"
+  "computer", "application", "dictionary", "cat", "dog"
 ];
 
 async function addMeaning(word) {
@@ -139,14 +188,68 @@ function getTreeStructure(node) {
 // ---------------- HTTP Server ------------------
 
 const server = http.createServer((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Content-Type", "application/json");
+
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
   const query = parsedUrl.query;
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Content-Type", "application/json");
+  
 
-  if (pathname === "/api/tree") {
+  if (pathname === "/api/insert" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => (body += chunk));
+    req.on("end", async () => {
+      try {
+        const { word, meaning } = JSON.parse(body);
+    
+        if (!word) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ message: "Word is required" }));
+          return;
+        }
+    
+        let definition = meaning;
+    
+        if (!definition) {
+          try {
+            const apiRes = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+            const data = await apiRes.json();
+            definition = data[0]?.meanings?.[0]?.definitions?.[0]?.definition || "Meaning not found";
+          } catch {
+            definition = "Meaning not found";
+          }
+        }
+    
+        avl.insertPair(word, definition);
+        res.writeHead(200);
+        res.end(JSON.stringify({ word, meaning: definition }));
+    
+      } catch (error) {
+        console.error("❌ Insert failed:", error.message);
+        res.writeHead(500);
+        res.end(JSON.stringify({ message: "Insert failed", error: error.message }));
+      }
+    });
+    
+  }
+
+  else if (pathname === "/api/delete" && query.key) {
+    avl.deleteKey(query.key);
+    res.writeHead(200);
+    res.end(JSON.stringify({ message: `${query.key} deleted` }));
+  }
+  
+  else if (pathname === "/api/tree") {
     const tree = getTreeStructure(avl.root);
     res.writeHead(200);
     res.end(JSON.stringify(tree));

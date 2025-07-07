@@ -28,6 +28,59 @@ async function searchWords() {
   }
 }
 
+async function insertWord() {
+  const word = document.getElementById("insertWord").value.trim();
+  const meaning = document.getElementById("insertMeaning").value.trim();
+
+  if (!word) {
+    alert("Please enter a word.");
+    return;
+  }
+
+  console.log("🚀 Trying to insert:", word, meaning); // 👈 LOG THIS
+
+  try {
+    const res = await fetch("http://localhost:3001/api/insert", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word, meaning }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(`Server error: ${res.status} - ${errorData.message || 'Unknown error'}`);
+    }
+
+    const data = await res.json();
+    alert(`✅ Inserted: ${data.word} → ${data.meaning}`);
+    drawAVL();
+  } catch (err) {
+    console.error("Insert error:", err);
+    alert(`Failed to insert: ${err.message}`);
+  }
+}
+
+
+async function deleteWord() {
+  const word = document.getElementById("deleteWord").value.trim();
+
+  if (!word) {
+    alert("Please enter a word to delete.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3001/api/delete?key=${word}`);
+    const data = await res.json();
+    alert(`🗑️ Deleted: ${word}`);
+    drawAVL();
+  } catch (err) {
+    console.error("Delete error:", err);
+    alert("Failed to delete.");
+  }
+}
+
+
 async function drawAVL() {
   const res = await fetch("http://localhost:3001/api/tree");
   const tree = await res.json();
