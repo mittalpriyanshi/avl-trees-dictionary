@@ -1,4 +1,4 @@
-# 📕 AVL Tree Dictionary Web App
+# AVL Tree Dictionary Web App
 
 A full-stack dictionary project that:
 - Uses an AVL Tree to store words and definitions
@@ -15,13 +15,13 @@ A full-stack dictionary project that:
 - Node.js (Backend with custom AVL logic)
 - Dictionary API: [dictionaryapi.dev](https://dictionaryapi.dev)
   
-### 🚀 Features
-- 🔍 Prefix-based autocomplete
-- 🖊️ User inserts new words (with optional meaning)
-- ⛔ Words can be deleted
-- 📈 AVL tree is dynamically rebalanced and drawn in canvas
+### Features
+- Prefix-based autocomplete
+- User inserts new words (with optional meaning)
+- Words can be deleted
+- AVL tree is dynamically rebalanced and drawn in canvas
 
-### 📦 Run Locally
+### Run Locally
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/avl-tree-project
