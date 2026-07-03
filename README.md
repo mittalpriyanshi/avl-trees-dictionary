@@ -24,7 +24,7 @@ A full-stack dictionary project that:
 ### Run Locally
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/avl-tree-project
-cd avl-tree-project/backend
+git clone https://github.com/mittalpriyanshi/avl-trees-dictionary
+cd avl-trees-dictionary/backend
 npm install
 node index.js
