@@ -22,7 +22,9 @@ For every node:
 
 ```text
 |height(left) - height(right)| <= 1
-  
+```
+
+
 ### 🔧 Tech Stack
 - HTML, CSS, JavaScript (Frontend)
 - Node.js (Backend with custom AVL logic)
