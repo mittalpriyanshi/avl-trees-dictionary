@@ -1,91 +1,608 @@
-/* style.css */
+
+ * {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: #172033;
+
+  background: #f4f7fb;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #db8989;
+  margin: 0;
+
+  min-height: 100vh;
+
+  background: #f4f7fb;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: rgb(133, 222, 166);
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-input[type="text"] {
-  padding: 10px;
-  width: 70%;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+button,
+input {
+  font: inherit;
 }
 
 button {
-  padding: 10px 15px;
-  font-size: 16px;
-  margin-left: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-#treeCanvas {
-  max-width: 1000px;
-  height: 500px;
-  display: block;
-  margin: 20px auto;
-  border: 1px solid #ccc;
-  background-color: #a8d5ba;
- 
-  
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
-.button-wrapper {
+
+
+/* ==========================================================
+   LAYOUT
+   ========================================================== */
+
+.container {
+  width: min(
+    100% - 32px,
+    1100px
+  );
+
+  margin: 0 auto;
+
+  padding: 40px 0 60px;
+}
+
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+
+  color: #2563eb;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+.header h1 {
+  margin: 0;
+
+  font-size: clamp(
+    30px,
+    5vw,
+    44px
+  );
+
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 12px 0 0;
+
+  max-width: 680px;
+
+  color: #64748b;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   CARDS
+   ========================================================== */
+
+.card {
+  margin-bottom: 20px;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #dce3ed;
+
+  
+
+  box-shadow:
+    0 3px 12px
+    rgba(15, 23, 42, 0.05);
+}
+
+.card h2 {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+.section-heading {
   display: flex;
-  justify-content: center;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-bottom: 18px;
+}
+
+.hint {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   FORMS
+   ========================================================== */
+
+.search-row {
+  display: flex;
+
+  gap: 10px;
+}
+
+.form-stack {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.form-stack > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+label {
+  color: #334155;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 11px 13px;
+
+  color: #172033;
+
+  background: #ffffff;
+
+  border:
+    1px solid #cbd5e1;
+
+
+  outline: none;
+}
+
+input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37, 99, 235, 0.12);
+}
+
+button {
+  padding: 11px 17px;
+
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 0;
+
+
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button:active {
+  transform:
+    translateY(1px);
+}
+
+.search-row button {
+  flex-shrink: 0;
+}
+
+.danger-button {
+  background: #dc2626;
+}
+
+.danger-button:hover {
+  background: #b91c1c;
+}
+
+.secondary-button {
+  color: #334155;
+
+  background: #eef2f7;
+
+  border:
+    1px solid #d5dde8;
+}
+
+.secondary-button:hover {
+  background: #e2e8f0;
+}
+
+.button-placeholder {
+  min-height: 0;
+}
+
+
+/* ==========================================================
+   OPERATION GRID
+   ========================================================== */
+
+.operations-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+/* ==========================================================
+   SEARCH RESULTS
+   ========================================================== */
+
+.status {
+  min-height: 20px;
+
+  margin-top: 12px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.results {
   margin-top: 10px;
 }
 
-
-button:hover {
-  background-color: #0056b3;
-}
-
-#results {
-  margin-top: 20px;
-}
-
 .entry {
-  background-color: #f1f1f1;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
+  margin-bottom: 8px;
+
+  padding: 12px 14px;
+
+  background: #f8fafc;
+
+  border:
+    1px solid #e2e8f0;
+
+
+  line-height: 1.5;
 }
 
 .entry strong {
-  color: #007bff;
+  color: #2563eb;
 }
 
-.input-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+.empty-message {
+  color: #64748b;
+
+  font-style: italic;
 }
 
-.input-group input {
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  flex: 1;
-  min-width: 150px;
+
+/* ==========================================================
+   METRICS
+   ========================================================== */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #dce3ed;
+
+}
+
+.metric-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.metric-value {
+  display: block;
+
+  color: #172033;
+
+  font-size: 23px;
+}
+
+.metric-value.valid {
+  color: #15803d;
+}
+
+.metric-value.invalid {
+  color: #dc2626;
+}
+
+
+/* ==========================================================
+   OPERATION STATUS
+   ========================================================== */
+
+.operation-card {
+  border-left:
+    4px solid #2563eb;
+}
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 7px 11px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.badge.neutral {
+  color: #475569;
+
+  background: #eef2f7;
+}
+
+.badge.rotation {
+  color: #92400e;
+
+  background: #fef3c7;
+}
+
+.rotation-explanation {
+  padding: 14px 16px;
+  color: #334155;
+  background: #f8fafc;
+  border:
+    1px solid #e2e8f0;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   TREE
+   ========================================================== */
+
+.tree-card {
+  overflow: hidden;
+  padding-bottom: 24px;
+  background: #ffffff;
+}
+
+.tree-message {
+  margin-bottom: 12px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* ==========================================================
+   SVG TREE
+   ========================================================== */
+
+.tree-container {
+  width: 100%;
+  min-height: 380px;
+  max-height: 520px;
+  overflow: auto;
+  padding: 20px;
+  background: #b8d9c0;
+  border:
+    1px solid #a7cbb0;
+}
+
+#treeSvg {
+  display: block;
+  margin: 0 auto;
+  min-width: 650px;
+  min-height: 350px;
+}
+
+
+/* ==========================================================
+   TREE EDGES
+   ========================================================== */
+
+.tree-edge {
+  stroke: #334155;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+}
+
+
+/* ==========================================================
+   TREE NODES
+   ========================================================== */
+
+.tree-node {
+  cursor: pointer;
+}
+
+
+/*
+ * Normal balanced node
+ */
+
+.tree-node-circle {
+  fill: #c9dcf7;
+
+  stroke: #334155;
+
+  stroke-width: 2;
+
+  transition:
+    fill 0.15s ease,
+    stroke-width 0.15s ease;
+}
+
+
+/*
+ * Node whose balance factor is +1 or -1.
+ */
+
+.tree-node-circle.warning {
+  fill: #d5e4f8;
+}
+
+
+/*
+ * Invalid AVL node.
+ *
+ * Normally this should never appear if the AVL implementation
+ * is correct, but it gives us a useful visual debugging state.
+ */
+
+.tree-node-circle.invalid {
+  fill: #f8caca;
+
+  stroke: #991b1b;
+}
+
+
+/*
+ * Slight interaction feedback.
+ */
+
+.tree-node:hover
+.tree-node-circle {
+  stroke-width: 3;
+}
+
+
+/* ==========================================================
+   TREE WORD
+   ========================================================== */
+
+.tree-node-key {
+  fill: #172033;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   TREE MESSAGE
+   ========================================================== */
+
+.tree-message {
+  margin-bottom: 12px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (
+  max-width: 750px
+) {
+  .container {
+    width:
+      min(
+        100% - 20px,
+        1100px
+      );
+
+    padding-top: 24px;
+  }
+
+  .operations-grid,
+  .stats-grid,
+  .concept-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-row button {
+    width: 100%;
+  }
+
+  .section-heading {
+    flex-direction: column;
+  }
+
+  .section-heading button {
+    width: 100%;
+  }
 }

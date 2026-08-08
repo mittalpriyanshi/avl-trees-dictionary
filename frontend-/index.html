@@ -3,36 +3,368 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AVL Dictionary</title>
-  <link rel="stylesheet" href="styles.css" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>AVL Tree Dictionary</title>
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  />
 </head>
 
 <body>
-  <div class="container">
-    <h1>AVL Dictionary Autocomplete</h1>
-    <input type="text" id="prefix" oninput="searchWords()" placeholder="Type to search..." />
-    <button onclick="search()" id="search">Search</button>
-    <h2>Add Word to Dictionary</h2>
-    <div class="input-group">
-      <input type="text" id="insertWord" placeholder="Word" />
-      <input type="text" id="insertMeaning" placeholder="Meaning (optional)" />
-      <button onclick="insertWord()">Insert</button> 
-    </div>
-   
-    
-    <h2>Delete Word from Dictionary</h2>
-    <input type="text" id="deleteWord" placeholder="Word to delete" />
-    <button onclick="deleteWord()">Delete</button>
-    <div id="results"></div>
-    <div class="button-wrapper">
-      <button onclick="drawAVL()">📈 Visualize Tree</button>
-    </div>
-    <canvas id="treeCanvas" width="600" height="600""></canvas>
-    
-  </div>
 
-  <script src=" script.js"></script>
+  <main class="container">
+
+    <!-- ================================================== -->
+    <!-- HEADER -->
+    <!-- ================================================== -->
+
+    <header class="header">
+
+      <div>
+        <p class="eyebrow">
+          DATA STRUCTURES PROJECT
+        </p>
+
+        <h1>
+          AVL Tree Dictionary
+        </h1>
+
+        <p class="subtitle">
+          An interactive dictionary powered by
+          a self-balancing AVL tree.
+        </p>
+      </div>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- SEARCH -->
+    <!-- ================================================== -->
+
+    <section class="card">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>
+            Dictionary Search
+          </h2>
+
+          <p class="hint">
+            Prefix search uses the sorted order
+            maintained by the AVL tree.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="search-row">
+
+        <label
+          for="prefix"
+          class="sr-only"
+        >
+          Search prefix
+        </label>
+
+        <input
+          type="text"
+          id="prefix"
+          placeholder="Try: app, ban, comp..."
+          autocomplete="off"
+        />
+
+        <button
+          type="button"
+          id="searchButton"
+        >
+          Search
+        </button>
+
+      </div>
+
+      <div
+        id="searchStatus"
+        class="status"
+        aria-live="polite"
+      ></div>
+
+      <div
+        id="results"
+        class="results"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+
+    <!-- ================================================== -->
+    <!-- INSERT / DELETE -->
+    <!-- ================================================== -->
+
+    <section class="operations-grid">
+
+      <!-- INSERT -->
+
+      <div class="card">
+
+        <h2>
+          Insert / Update
+        </h2>
+
+        <p class="hint">
+          Add a word to the AVL dictionary.
+        </p>
+
+        <div class="form-stack">
+
+          <div>
+            <label
+              for="insertWord"
+            >
+              Word
+            </label>
+
+            <input
+              type="text"
+              id="insertWord"
+              placeholder="e.g. algorithm"
+            />
+          </div>
+
+          <div>
+            <label
+              for="insertMeaning"
+            >
+              Meaning
+            </label>
+
+            <input
+              type="text"
+              id="insertMeaning"
+              placeholder="Optional"
+            />
+          </div>
+
+          <button
+            type="button"
+            id="insertButton"
+          >
+            Insert Word
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- DELETE -->
+
+      <div class="card">
+
+        <h2>
+          Delete
+        </h2>
+
+        <p class="hint">
+          Remove a word from the AVL tree.
+        </p>
+
+        <div class="form-stack">
+
+          <div>
+            <label
+              for="deleteWord"
+            >
+              Word
+            </label>
+
+            <input
+              type="text"
+              id="deleteWord"
+              placeholder="e.g. apple"
+            />
+          </div>
+
+          <div class="button-placeholder">
+            &nbsp;
+          </div>
+
+          <button
+            type="button"
+            id="deleteButton"
+            class="danger-button"
+          >
+            Delete Word
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================== -->
+    <!-- AVL STATUS -->
+    <!-- ================================================== -->
+
+    <section class="stats-grid">
+
+      <div class="metric-card">
+
+        <span class="metric-label">
+          Tree Height
+        </span>
+
+        <strong
+          id="treeHeight"
+          class="metric-value"
+        >
+          -
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span class="metric-label">
+          AVL Status
+        </span>
+
+        <strong
+          id="avlStatus"
+          class="metric-value"
+        >
+          Checking...
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span class="metric-label">
+          Nodes
+        </span>
+
+        <strong
+          id="nodeCount"
+          class="metric-value"
+        >
+          -
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================== -->
+    <!-- LAST OPERATION -->
+    <!-- ================================================== -->
+
+    <section class="card operation-card">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>
+            Last AVL Operation
+          </h2>
+
+          <p
+            id="operationDescription"
+            class="hint"
+          >
+            No operation performed yet.
+          </p>
+        </div>
+
+        <span
+          id="rotationBadge"
+          class="badge neutral"
+        >
+          No rotation
+        </span>
+
+      </div>
+
+      <div
+        id="rotationExplanation"
+        class="rotation-explanation"
+      >
+        Insert or delete a word to see whether
+        the AVL tree needs to rebalance.
+      </div>
+
+    </section>
+
+
+    <!-- ================================================== -->
+    <!-- AVL TREE -->
+    <!-- ================================================== -->
+
+    <section class="card tree-card">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>
+            AVL Tree Visualizer
+          </h2>
+
+          <p class="hint">
+            Each node shows its key, height,
+            and balance factor.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          id="resetButton"
+          class="secondary-button"
+        >
+          Reset Tree
+        </button>
+
+      </div>
+
+      <div
+        id="treeMessage"
+        class="tree-message"
+        aria-live="polite"
+      ></div>
+
+      <div
+        id="treeContainer"
+        class="tree-container"
+      >
+
+        <svg
+          id="treeSvg"
+          role="img"
+          aria-label="Interactive AVL tree visualization"
+        ></svg>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  <script src="script.js"></script>
+
 </body>
 
 </html>
