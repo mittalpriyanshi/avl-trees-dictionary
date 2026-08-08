@@ -1,18 +1,21 @@
 {
-  "name": "frontend",
+  "name": "avl-dictionary-backend",
   "version": "1.0.0",
+  "description": "Node.js backend implementing an AVL-tree-based dictionary and prefix search API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "keywords": [],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "avl-tree",
+    "binary-search-tree",
+    "autocomplete",
+    "dictionary",
+    "nodejs"
+  ],
   "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
-  }
+  "license": "MIT"
 }

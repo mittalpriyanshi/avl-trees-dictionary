@@ -1,14 +1,27 @@
-# 📕 AVL Tree Dictionary Web App
+# AVL Tree Dictionary
 
-A full-stack dictionary project that:
-- Uses an AVL Tree to store words and definitions
-- Supports live **search**, **insertion**, and **deletion**
-- **Visualizes the AVL Tree** in real time
-  
-### Why AVL Trees?
-- Self-balancing Binary Search Trees
-- O(log n) time complexity for insert, delete, and search
-- Outperform standard BSTs and hash tables in lookups
+A full-stack dictionary application that uses an **AVL Tree** as its
+underlying data structure.
+
+The application supports:
+
+- Prefix-based autocomplete
+- Word insertion
+- Word deletion
+- Dictionary definitions fetched from an external API
+- Real-time AVL tree visualization
+- AVL tree validation
+
+---
+
+## Why an AVL Tree?
+
+An AVL Tree is a self-balancing Binary Search Tree.
+
+For every node:
+
+```text
+|height(left) - height(right)| <= 1
   
 ### 🔧 Tech Stack
 - HTML, CSS, JavaScript (Frontend)
@@ -27,4 +40,4 @@ A full-stack dictionary project that:
 git clone https://github.com/YOUR_USERNAME/avl-tree-project
 cd avl-tree-project/backend
 npm install
-node index.js
+npm start
